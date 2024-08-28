@@ -18,9 +18,13 @@ def button_click(number):
 
 def operation_click(op):
     global operation, current_number
-    current_number = float(e.get())
-    operation = op
-    e.delete(0, END)
+    try:
+        current_number = float(e.get())
+        operation = op
+        e.delete(0, END)
+    except ValueError:
+        e.delete(0, END)
+        e.insert(0, "Error")
 
 def equals_click():
     global operation, current_number
@@ -76,9 +80,13 @@ def backspace():
 
 def percentage():
     global operation, current_number
-    current_number = float(e.get())
-    operation = "percent"
-    e.delete(0, END)
+    try:
+        current_number = float(e.get())
+        operation = "percent"
+        e.delete(0, END)
+    except ValueError:
+        e.delete(0, END)
+        e.insert(0, "Error")
 
 def square_root():
     try:
@@ -138,9 +146,13 @@ def natural_log():
 
 def exponentiation():
     global operation, current_number
-    current_number = float(e.get())
-    operation = "power"
-    e.delete(0, END)
+    try:
+        current_number = float(e.get())
+        operation = "power"
+        e.delete(0, END)
+    except ValueError:
+        e.delete(0, END)
+        e.insert(0, "Error")
 
 button_color = "#4CAF50"
 button_text_color = "white"
@@ -179,11 +191,11 @@ Button(root, text="√", padx=33, pady=20, command=square_root, bg="#3F51B5", fg
 Button(root, text="x²", padx=30, pady=20, command=square, bg="#3F51B5", fg=button_text_color, font=button_font).grid(row=5, column=4, padx=5, pady=5)
 
 # Scientific buttons
-Button(root, text="sin", padx=30, pady=20, command=sine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=1, column=4, padx=5, pady=5)
-Button(root, text="cos", padx=30, pady=20, command=cosine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=2, column=4, padx=5, pady=5)
-Button(root, text="tan", padx=30, pady=20, command=tangent, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=3, column=4, padx=5, pady=5)
-Button(root, text="log", padx=27, pady=20, command=logarithm, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=4, column=4, padx=5, pady=5)
-Button(root, text="ln", padx=30, pady=20, command=natural_log, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=4, column=2, padx=5, pady=5)
-Button(root, text="x^y", padx=27, pady=20, command=exponentiation, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=3, column=4, padx=5, pady=5)
+Button(root, text="sin", padx=27, pady=20, command=sine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=1, column=4, padx=5, pady=5)
+Button(root, text="cos", padx=27, pady=20, command=cosine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=2, column=4, padx=5, pady=5)
+Button(root, text="tan", padx=27, pady=20, command=tangent, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=3, column=4, padx=5, pady=5)
+Button(root, text="log", padx=24, pady=20, command=logarithm, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=4, column=4, padx=5, pady=5)
+Button(root, text="ln", padx=27, pady=20, command=natural_log, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=5, column=1, padx=5, pady=5)
+Button(root, text="x^y", padx=24, pady=20, command=exponentiation, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=4, column=2, padx=5, pady=5)
 
 root.mainloop()
