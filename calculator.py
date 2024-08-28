@@ -2,12 +2,13 @@ from tkinter import *
 
 root = Tk()
 root.title("Simple Calculator")
+root.configure(bg="#333333")
 
 operation = None
 current_number = 0
 
-e = Entry(root, width=50, borderwidth=5)
-e.grid(row=0, column=0, columnspan=4)
+e = Entry(root, width=50, borderwidth=5, font=("Arial", 18), bg="#ffffff")
+e.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
 
 def button_click(number):
     current = e.get()
@@ -63,30 +64,34 @@ def positive_negative():
         else:
             e.insert(0, "-")
 
+button_color = "#4CAF50"
+button_text_color = "white"
+button_font = ("Arial", 14)
+
 # Number buttons
-button_1 = Button(root, borderwidth=2, text="1", padx=40, pady=20, command=lambda: button_click(1)).grid(row=3, column=0)
-button_2 = Button(root, borderwidth=2, text="2", padx=40, pady=20, command=lambda: button_click(2)).grid(row=3, column=1)
-button_3 = Button(root, borderwidth=2, text="3", padx=40, pady=20, command=lambda: button_click(3)).grid(row=3, column=2)
+Button(root, text="1", padx=40, pady=20, command=lambda: button_click(1), bg=button_color, fg=button_text_color, font=button_font).grid(row=3, column=0, padx=5, pady=5)
+Button(root, text="2", padx=40, pady=20, command=lambda: button_click(2), bg=button_color, fg=button_text_color, font=button_font).grid(row=3, column=1, padx=5, pady=5)
+Button(root, text="3", padx=40, pady=20, command=lambda: button_click(3), bg=button_color, fg=button_text_color, font=button_font).grid(row=3, column=2, padx=5, pady=5)
 
-button_4 = Button(root, borderwidth=2, text="4", padx=40, pady=20, command=lambda: button_click(4)).grid(row=2, column=0)
-button_5 = Button(root, borderwidth=2, text="5", padx=40, pady=20, command=lambda: button_click(5)).grid(row=2, column=1)
-button_6 = Button(root, borderwidth=2, text="6", padx=40, pady=20, command=lambda: button_click(6)).grid(row=2, column=2)
+Button(root, text="4", padx=40, pady=20, command=lambda: button_click(4), bg=button_color, fg=button_text_color, font=button_font).grid(row=2, column=0, padx=5, pady=5)
+Button(root, text="5", padx=40, pady=20, command=lambda: button_click(5), bg=button_color, fg=button_text_color, font=button_font).grid(row=2, column=1, padx=5, pady=5)
+Button(root, text="6", padx=40, pady=20, command=lambda: button_click(6), bg=button_color, fg=button_text_color, font=button_font).grid(row=2, column=2, padx=5, pady=5)
 
-button_7 = Button(root, borderwidth=2, text="7", padx=40, pady=20, command=lambda: button_click(7)).grid(row=1, column=0)
-button_8 = Button(root, borderwidth=2, text="8", padx=40, pady=20, command=lambda: button_click(8)).grid(row=1, column=1)
-button_9 = Button(root, borderwidth=2, text="9", padx=40, pady=20, command=lambda: button_click(9)).grid(row=1, column=2)
+Button(root, text="7", padx=40, pady=20, command=lambda: button_click(7), bg=button_color, fg=button_text_color, font=button_font).grid(row=1, column=0, padx=5, pady=5)
+Button(root, text="8", padx=40, pady=20, command=lambda: button_click(8), bg=button_color, fg=button_text_color, font=button_font).grid(row=1, column=1, padx=5, pady=5)
+Button(root, text="9", padx=40, pady=20, command=lambda: button_click(9), bg=button_color, fg=button_text_color, font=button_font).grid(row=1, column=2, padx=5, pady=5)
 
-button_0 = Button(root, borderwidth=2, text="0", padx=40, pady=20, command=lambda: button_click(0)).grid(row=4, column=1)
+Button(root, text="0", padx=40, pady=20, command=lambda: button_click(0), bg=button_color, fg=button_text_color, font=button_font).grid(row=4, column=1, padx=5, pady=5)
 
 # Operation buttons
-button_sum = Button(root, borderwidth=2, text="+", padx=37, pady=20, command=lambda: operation_click("add")).grid(row=1, column=3)
-button_minus = Button(root, borderwidth=2, text="-", padx=38, pady=20, command=lambda: operation_click("subtract")).grid(row=2, column=3)
-button_multiply = Button(root, borderwidth=2, text="X", padx=37, pady=20, command=lambda: operation_click("multiply")).grid(row=3, column=3)
-button_divide = Button(root, borderwidth=2, text="/", padx=38, pady=20, command=lambda: operation_click("divide")).grid(row=4, column=3)
+Button(root, text="+", padx=37, pady=20, command=lambda: operation_click("add"), bg="#FF9800", fg=button_text_color, font=button_font).grid(row=1, column=3, padx=5, pady=5)
+Button(root, text="-", padx=38, pady=20, command=lambda: operation_click("subtract"), bg="#FF9800", fg=button_text_color, font=button_font).grid(row=2, column=3, padx=5, pady=5)
+Button(root, text="X", padx=37, pady=20, command=lambda: operation_click("multiply"), bg="#FF9800", fg=button_text_color, font=button_font).grid(row=3, column=3, padx=5, pady=5)
+Button(root, text="/", padx=38, pady=20, command=lambda: operation_click("divide"), bg="#FF9800", fg=button_text_color, font=button_font).grid(row=4, column=3, padx=5, pady=5)
 
-button_equals = Button(root, borderwidth=2, text="=", padx=36, pady=20, command=equals_click).grid(row=5, column=3)
-button_clear = Button(root, borderwidth=2, text="CE", padx=37, pady=20, command=clear_entry).grid(row=4, column=0)
-button_negative_positive = Button(root, borderwidth=2, text="+/-", padx=37, pady=20, command=positive_negative).grid(row=4, column=2)
-button_point = Button(root, borderwidth=2, text=".", padx=41, pady=20, command=add_point).grid(row=5, column=1)
+Button(root, text="=", padx=36, pady=20, command=equals_click, bg="#2196F3", fg=button_text_color, font=button_font).grid(row=5, column=3, padx=5, pady=5)
+Button(root, text="CE", padx=37, pady=20, command=clear_entry, bg="#F44336", fg=button_text_color, font=button_font).grid(row=4, column=0, padx=5, pady=5)
+Button(root, text="+/-", padx=37, pady=20, command=positive_negative, bg="#9C27B0", fg=button_text_color, font=button_font).grid(row=4, column=2, padx=5, pady=5)
+Button(root, text=".", padx=41, pady=20, command=add_point, bg="#9C27B0", fg=button_text_color, font=button_font).grid(row=5, column=1, padx=5, pady=5)
 
 root.mainloop()
