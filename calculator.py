@@ -2,7 +2,7 @@ from tkinter import *
 import math
 
 root = Tk()
-root.title("Simple Calculator")
+root.title("Scientific Calculator")
 root.configure(bg="#333333")
 
 operation = None
@@ -40,6 +40,8 @@ def equals_click():
             result = current_number / second_number
         elif operation == "percent":
             result = (current_number * second_number) / 100
+        elif operation == "power":
+            result = current_number ** second_number
         
         e.insert(0, result)
         operation = None
@@ -94,6 +96,52 @@ def square():
     except ValueError:
         e.insert(0, "Error")
 
+def sine():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.sin(math.radians(current)))
+    except ValueError:
+        e.insert(0, "Error")
+
+def cosine():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.cos(math.radians(current)))
+    except ValueError:
+        e.insert(0, "Error")
+
+def tangent():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.tan(math.radians(current)))
+    except ValueError:
+        e.insert(0, "Error")
+
+def logarithm():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.log10(current))
+    except ValueError:
+        e.insert(0, "Error")
+
+def natural_log():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.log(current))
+    except ValueError:
+        e.insert(0, "Error")
+
+def exponentiation():
+    global operation, current_number
+    current_number = float(e.get())
+    operation = "power"
+    e.delete(0, END)
+
 button_color = "#4CAF50"
 button_text_color = "white"
 button_font = ("Arial", 14)
@@ -122,12 +170,20 @@ Button(root, text="/", padx=34, pady=20, command=lambda: operation_click("divide
 Button(root, text="=", padx=33, pady=20, command=equals_click, bg="#2196F3", fg=button_text_color, font=button_font).grid(row=5, column=4, padx=5, pady=5)
 Button(root, text="CE", padx=30, pady=20, command=clear_entry, bg="#F44336", fg=button_text_color, font=button_font).grid(row=4, column=0, padx=5, pady=5)
 Button(root, text="+/-", padx=30, pady=20, command=positive_negative, bg="#9C27B0", fg=button_text_color, font=button_font).grid(row=4, column=2, padx=5, pady=5)
-Button(root, text=".", padx=35, pady=20, command=add_point, bg="#9C27B0", fg=button_text_color, font=button_font).grid(row=5, column=1, padx=5, pady=5)
+Button(root, text=".", padx=35, pady=20, command=add_point, bg="#9C27B0", fg=button_text_color, font=button_font).grid(row=4, column=4, padx=5, pady=5)
 
 # Additional buttons
 Button(root, text="←", padx=35, pady=20, command=backspace, bg="#FF5722", fg=button_text_color, font=button_font).grid(row=5, column=0, padx=5, pady=5)
 Button(root, text="%", padx=31, pady=20, command=percentage, bg="#FFEB3B", fg="black", font=button_font).grid(row=5, column=2, padx=5, pady=5)
 Button(root, text="√", padx=33, pady=20, command=square_root, bg="#3F51B5", fg=button_text_color, font=button_font).grid(row=5, column=3, padx=5, pady=5)
 Button(root, text="x²", padx=30, pady=20, command=square, bg="#3F51B5", fg=button_text_color, font=button_font).grid(row=5, column=4, padx=5, pady=5)
+
+# Scientific buttons
+Button(root, text="sin", padx=30, pady=20, command=sine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=1, column=4, padx=5, pady=5)
+Button(root, text="cos", padx=30, pady=20, command=cosine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=2, column=4, padx=5, pady=5)
+Button(root, text="tan", padx=30, pady=20, command=tangent, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=3, column=4, padx=5, pady=5)
+Button(root, text="log", padx=27, pady=20, command=logarithm, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=4, column=4, padx=5, pady=5)
+Button(root, text="ln", padx=30, pady=20, command=natural_log, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=4, column=2, padx=5, pady=5)
+Button(root, text="x^y", padx=27, pady=20, command=exponentiation, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=3, column=4, padx=5, pady=5)
 
 root.mainloop()
