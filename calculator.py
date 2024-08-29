@@ -1,17 +1,21 @@
 from tkinter import *
 import math
 
+# Root window setup
 root = Tk()
 root.title("Scientific Calculator")
 root.configure(bg="#333333")
 
+# Global variables
 operation = None
 current_number = 0
 memory = 0
 
+# Entry widget
 e = Entry(root, width=50, borderwidth=5, font=("Arial", 18), bg="#ffffff")
 e.grid(row=0, column=0, columnspan=6, padx=10, pady=10)
 
+# Utility functions
 def insert_value(value):
     e.insert(END, value)
 
@@ -27,7 +31,16 @@ def safe_operation(func, *args):
         update_display("Error")
     except ZeroDivisionError:
         update_display("Cannot divide by zero")
+    except Exception as ex:
+        update_display(f"Error: {ex}")
 
+def clear_entry():
+    global operation, current_number
+    operation = None
+    current_number = 0
+    e.delete(0, END)
+
+# Button functions
 def button_click(number):
     current = e.get()
     update_display(str(current) + str(number))
@@ -52,12 +65,6 @@ def equals_click():
     update_display(result)
     operation = None
 
-def clear_entry():
-    global operation, current_number
-    operation = None
-    current_number = 0
-    e.delete(0, END)
-
 def add_point():
     current = e.get()
     if "." not in current:
@@ -78,6 +85,7 @@ def percentage():
     operation = "percent"
     e.delete(0, END)
 
+# Mathematical functions
 def square_root():
     safe_operation(lambda x: math.sqrt(x), float(e.get()))
 
@@ -135,6 +143,7 @@ def inverse_cosine():
 def inverse_tangent():
     safe_operation(lambda x: math.degrees(math.atan(x)), float(e.get()))
 
+# Memory functions
 def memory_clear():
     global memory
     memory = 0
@@ -150,9 +159,39 @@ def memory_subtract():
     global memory
     memory = safe_operation(lambda x: memory - x, float(e.get()))
 
+# Conversion functions
+def convert_distance():
+    try:
+        meters = float(e.get())
+        km = meters / 1000
+        miles = meters * 0.000621371
+        update_display(f"{meters} m = {km} km = {miles} miles")
+    except ValueError:
+        update_display("Error")
+
+def convert_temperature():
+    try:
+        celsius = float(e.get())
+        fahrenheit = (celsius * 9/5) + 32
+        kelvin = celsius + 273.15
+        update_display(f"{celsius}°C = {fahrenheit}°F = {kelvin} K")
+    except ValueError:
+        update_display("Error")
+
+def convert_mass():
+    try:
+        grams = float(e.get())
+        kg = grams / 1000
+        pounds = grams * 0.00220462
+        update_display(f"{grams} g = {kg} kg = {pounds} lbs")
+    except ValueError:
+        update_display("Error")
+
+# Button configurations
 button_color = "#4CAF50"
 button_text_color = "white"
 button_font = ("Arial", 14)
+button_style = {"bg": button_color, "fg": button_text_color, "font": button_font, "relief": "raised", "bd": 5}
 
 buttons = [
     ("1", 3, 0), ("2", 3, 1), ("3", 3, 2), ("4", 2, 0), ("5", 2, 1), ("6", 2, 2), 
@@ -162,10 +201,26 @@ buttons = [
     ("tan", 3, 5), ("log", 4, 5), ("ln", 5, 1), ("x^y", 5, 4), ("sinh", 6, 1), 
     ("cosh", 6, 2), ("tanh", 6, 3), ("exp", 6, 4), ("π", 6, 0), ("e", 6, 5), 
     ("n!", 7, 0), ("asin", 7, 1), ("acos", 7, 2), ("atan", 7, 3), ("MC", 7, 4), 
-    ("MR", 7, 5), ("M+", 8, 4), ("M-", 8, 5)
+    ("MR", 7, 5), ("M+", 8, 4), ("M-", 8, 5),
+    ("Dist", 8, 0), ("Temp", 8, 1), ("Mass", 8, 2)
 ]
 
+# Mapping button text to functions
+function_map = {
+    "+": lambda: operation_click("add"), "-": lambda: operation_click("subtract"), 
+    "X": lambda: operation_click("multiply"), "/": lambda: operation_click("divide"), 
+    "=": equals_click, "CE": clear_entry, "+/-": positive_negative, "←": backspace, 
+    "%": percentage, "√": square_root, "x²": square, "sin": sine, "cos": cosine, 
+    "tan": tangent, "log": logarithm, "ln": natural_log, "x^y": exponentiation, 
+    "sinh": hyperbolic_sine, "cosh": hyperbolic_cosine, "tanh": hyperbolic_tangent, 
+    "exp": exponential, "π": pi, "e": euler, "n!": factorial, "asin": inverse_sine, 
+    "acos": inverse_cosine, "atan": inverse_tangent, "MC": memory_clear, "MR": memory_recall, 
+    "M+": memory_add, "M-": memory_subtract, "Dist": convert_distance, "Temp": convert_temperature, 
+    "Mass": convert_mass
+}
+
+# Creating buttons
 for (text, row, col) in buttons:
-    Button(root, text=text, padx=25, pady=20, command=lambda t=text: button_click(t) if t.isdigit() or t == "." else globals()[t.replace('X', 'multiply').replace('+/-', 'positive_negative').replace('←', 'backspace').replace('%', 'percentage').replace('√', 'square_root').replace('x²', 'square').replace('=', 'equals_click').replace('CE', 'clear_entry').replace('+', 'operation_click').replace('-', 'operation_click').replace('/', 'operation_click').replace('sin', 'sine').replace('cos', 'cosine').replace('tan', 'tangent').replace('log', 'logarithm').replace('ln', 'natural_log').replace('x^y', 'exponentiation').replace('sinh', 'hyperbolic_sine').replace('cosh', 'hyperbolic_cosine').replace('tanh', 'hyperbolic_tangent').replace('exp', 'exponential').replace('π', 'pi').replace('e', 'euler').replace('n!', 'factorial').replace('asin', 'inverse_sine').replace('acos', 'inverse_cosine').replace('atan', 'inverse_tangent').replace('MC', 'memory_clear').replace('MR', 'memory_recall').replace('M+', 'memory_add').replace('M-', 'memory_subtract')](text), bg=button_color if text.isdigit() or text in ['.', 'π', 'e'] else "#FF9800" if text in ['+', '-', 'X', '/'] else "#2196F3" if text == '=' else "#F44336" if text == 'CE' else "#9C27B0" if text in ['+/-', '.'] else "#FFEB3B" if text == '%' else "#3F51B5" if text in ['√', 'x²'] else "#8BC34A", fg=button_text_color, font=button_font).grid(row=row, column=col, padx=5, pady=5)
+    Button(root, text=text, padx=25, pady=20, command=lambda t=text: button_click(t) if t.isdigit() or t == "." else function_map[t](), **button_style).grid(row=row, column=col, padx=5, pady=5)
 
 root.mainloop()
