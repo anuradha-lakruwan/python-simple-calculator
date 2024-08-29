@@ -7,6 +7,7 @@ root.configure(bg="#333333")
 
 operation = None
 current_number = 0
+memory = 0
 
 e = Entry(root, width=50, borderwidth=5, font=("Arial", 18), bg="#ffffff")
 e.grid(row=0, column=0, columnspan=6, padx=10, pady=10)
@@ -192,6 +193,62 @@ def pi():
 def euler():
     e.insert(END, str(math.e))
 
+def factorial():
+    try:
+        current = int(e.get())
+        e.delete(0, END)
+        e.insert(0, math.factorial(current))
+    except ValueError:
+        e.insert(0, "Error")
+
+def inverse_sine():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.degrees(math.asin(current)))
+    except ValueError:
+        e.insert(0, "Error")
+
+def inverse_cosine():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.degrees(math.acos(current)))
+    except ValueError:
+        e.insert(0, "Error")
+
+def inverse_tangent():
+    try:
+        current = float(e.get())
+        e.delete(0, END)
+        e.insert(0, math.degrees(math.atan(current)))
+    except ValueError:
+        e.insert(0, "Error")
+
+def memory_clear():
+    global memory
+    memory = 0
+
+def memory_recall():
+    e.delete(0, END)
+    e.insert(0, memory)
+
+def memory_add():
+    global memory
+    try:
+        current = float(e.get())
+        memory += current
+    except ValueError:
+        e.insert(0, "Error")
+
+def memory_subtract():
+    global memory
+    try:
+        current = float(e.get())
+        memory -= current
+    except ValueError:
+        e.insert(0, "Error")
+
 button_color = "#4CAF50"
 button_text_color = "white"
 button_font = ("Arial", 14)
@@ -243,5 +300,15 @@ Button(root, text="tanh", padx=18, pady=20, command=hyperbolic_tangent, bg="#8BC
 Button(root, text="exp", padx=20, pady=20, command=exponential, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=6, column=4, padx=5, pady=5)
 Button(root, text="π", padx=25, pady=20, command=pi, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=6, column=0, padx=5, pady=5)
 Button(root, text="e", padx=25, pady=20, command=euler, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=6, column=5, padx=5, pady=5)
+Button(root, text="n!", padx=23, pady=20, command=factorial, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=7, column=0, padx=5, pady=5)
+Button(root, text="asin", padx=18, pady=20, command=inverse_sine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=7, column=1, padx=5, pady=5)
+Button(root, text="acos", padx=18, pady=20, command=inverse_cosine, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=7, column=2, padx=5, pady=5)
+Button(root, text="atan", padx=18, pady=20, command=inverse_tangent, bg="#8BC34A", fg=button_text_color, font=button_font).grid(row=7, column=3, padx=5, pady=5)
+
+# Memory buttons
+Button(root, text="MC", padx=20, pady=20, command=memory_clear, bg="#4CAF50", fg=button_text_color, font=button_font).grid(row=7, column=4, padx=5, pady=5)
+Button(root, text="MR", padx=20, pady=20, command=memory_recall, bg="#4CAF50", fg=button_text_color, font=button_font).grid(row=7, column=5, padx=5, pady=5)
+Button(root, text="M+", padx=20, pady=20, command=memory_add, bg="#4CAF50", fg=button_text_color, font=button_font).grid(row=8, column=4, padx=5, pady=5)
+Button(root, text="M-", padx=20, pady=20, command=memory_subtract, bg="#4CAF50", fg=button_text_color, font=button_font).grid(row=8, column=5, padx=5, pady=5)
 
 root.mainloop()
